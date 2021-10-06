@@ -78,23 +78,25 @@ const pinJSON = async function (object, filename) {
 
 // pinFile("/home/mohsin/Documents/1.jpg", "werwe.jpg");
 
-let object = {
-  title: "Ghoulie NFT",
-  type: "object",
-  description:
-    "test is one of the rarest 11 1 of 1 Ghoulies available. This ghoulie posesses only 2 attributes unlike all other Ghoulies",
-  image: "https://ipfs.io/ipfs/bafybeidpqodfa743lsgvglgaakf7fx3jssfjhrsmur2a3oy3sxvibokyoi",
-  background_color: "#000000",
-  attributes: [
-    {
-      trait_type: "Name",
-      value: "OG Sketch",
-    },
-    {
-      trait_type: "Mythical",
-      value: "Mythical",
-    },
-  ],
-};
+// let object = {
+//   title: "Ghoulie NFT",
+//   type: "object",
+//   description:
+//     "test is one of the rarest 11 1 of 1 Ghoulies available. This ghoulie posesses only 2 attributes unlike all other Ghoulies",
+//   image: "https://ipfs.io/ipfs/bafybeidpqodfa743lsgvglgaakf7fx3jssfjhrsmur2a3oy3sxvibokyoi",
+//   background_color: "#000000",
+//   attributes: [
+//     {
+//       trait_type: "Name",
+//       value: "OG Sketch",
+//     },
+//     {
+//       trait_type: "Mythical",
+//       value: "Mythical",
+//     },
+//   ],
+// };
 
-pinJSON(object, "test.json");
+// pinJSON(object, "test.json");
+
+module.exports = { pinFile, pinJSON };
