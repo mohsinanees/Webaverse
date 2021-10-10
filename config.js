@@ -1,10 +1,11 @@
+require("dotenv").config({ path: "./.env" });
+
 module.exports = {
-  DB: {
-    host: "http://1e8e-58-65-220-27.ngrok.io/ghoulies/",
-    port: "",
-    table: {
-      metadata: "entries", //"Ghoulie_metadata",
-      voucher: "settings", //"Ghoulie_voucher",
-    },
+  testnet: {
+    secret: process.env.SECRET,
+    priv_key: process.env.TEST_PRIV_KEY,
+    signer_key: process.env.SIGNER_KEY,
+    infura_key: process.env.INFURA_KEY,
   },
+  mainnet: {},
 };
