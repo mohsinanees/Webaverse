@@ -39,12 +39,14 @@ contract("Webaverse", async function () {
             it("Should redeem an NFT from a signed voucher", async function () {
                 console.log(signer.address);
                 const lazyMinter = new LazyMinter({
-                    contractAddress: Webaverse.address,
+                    contract: Webaverse,
                     signer: signer,
                 });
                 var validTokenIds = [1, 2, 3];
-                var nonce = crypto.randomBytes(32).readUIntBE(0, 6);
+                var nonce = crypto.randomBytes(32).readUIntBE(0, 6); //ethers.BigNumber.from(ethers.utils.randomBytes(32));
+                console.log(nonce);
                 var expiry = Math.round(+new Date() / 1000 + 50);
+                console.log(expiry);
                 const voucher = await lazyMinter.createVoucher(validTokenIds[0], nonce, expiry);
                 console.log(voucher);
                 await expect(Webaverse.claim(claimer.address, voucher))
