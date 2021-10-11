@@ -66,7 +66,6 @@ class LazyMinter {
             return this._domain;
         }
         const chainId = 1337; //await this.contract.getChainID();
-        console.log("ChainID : ", chainId);
         this._domain = {
             name: SIGNING_DOMAIN_NAME,
             version: SIGNING_DOMAIN_VERSION,

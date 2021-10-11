@@ -22,7 +22,7 @@ contract("Webaverse", async function () {
     const signer = new ethers.Wallet(privKeys[0], provider);
     const claimer = new ethers.Wallet(privKeys[1], provider);
     const externalSigner = new ethers.Wallet(privKeys[2], provider);
-    console.log(signer.address);
+    // console.log(signer.address);
     beforeEach(async function () {
         Webaverse = await WebaverseContract.new();
         await Webaverse.mint(signer.address, 1, "abcdef");
@@ -37,21 +37,29 @@ contract("Webaverse", async function () {
     describe("Claim", async function () {
         context("With valid signature, valid nonce, valid expiry", async function () {
             it("Should redeem an NFT from a signed voucher", async function () {
-                console.log(signer.address);
+                // console.log(signer.address);
                 const lazyMinter = new LazyMinter({
                     contract: Webaverse,
                     signer: signer,
                 });
                 var validTokenIds = [1, 2, 3];
-                var nonce = crypto.randomBytes(32).readUIntBE(0, 6); //ethers.BigNumber.from(ethers.utils.randomBytes(32));
-                console.log(nonce);
-                var expiry = Math.round(+new Date() / 1000 + 50);
-                console.log(expiry);
+                var nonce = ethers.BigNumber.from(ethers.utils.randomBytes(32)).toNumber();
+                var expiry = ethers.BigNumber.from(Math.round(+new Date() / 1000 + 50)).toNumber();
+                // console.log(expiry);
                 const voucher = await lazyMinter.createVoucher(validTokenIds[0], nonce, expiry);
-                console.log(voucher);
-                await expect(Webaverse.claim(claimer.address, voucher))
-                    .to.emit(Webaverse, "Transfer")
-                    .withArgs(signer.address, claimer.address, voucher.tokenId);
+                // console.log(voucher);
+                //check if event transfer is emitted
+                const { logs } = await Webaverse.claim(claimer.address, voucher);
+                // console.log(logs);
+                expect(logs.length).to.be.equal(2);
+                expect(logs[1].event).to.be.equal("Transfer");
+                expect(logs[1].args.from).to.be.equal(signer.address);
+                expect(logs[1].args.to).to.be.equal(claimer.address);
+                expect(logs[1].args.tokenId.toNumber()).to.be.equal(validTokenIds[0]);
+
+                // await expect(Webaverse.claim(claimer.address, voucher))
+                //     .to.emit(Webaverse, "Transfer")
+                //     .withArgs(signer.address, claimer.address, voucher.tokenId);
             });
         });
         // it("Should redeem an NFT from a signed voucher", async function () {
