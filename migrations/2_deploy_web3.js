@@ -1,5 +1,5 @@
-const WebaverseNFT = artifacts.require("WebaverseNFT.sol");
+const Webaverse = artifacts.require("Webaverse.sol");
 
 module.exports = function (deployer) {
-  deployer.deploy(WebaverseNFT);
+    deployer.deploy(Webaverse);
 };

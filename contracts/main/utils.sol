@@ -2,7 +2,7 @@
 
 // File: @openzeppelin/contracts/utils/cryptography/draft-EIP712.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev https://eips.ethereum.org/EIPS/eip-712[EIP 712] is a standard for hashing and signing of typed structured data.
@@ -125,7 +125,7 @@ abstract contract EIP712 {
 
 // File: @openzeppelin/contracts/utils/cryptography/ECDSA.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Elliptic Curve Digital Signature Algorithm (ECDSA) operations.
@@ -373,7 +373,7 @@ library ECDSA {
 
 // File: @openzeppelin/contracts/utils/introspection/IERC165.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -398,7 +398,7 @@ interface IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC721/IERC721.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Required interface of an ERC721 compliant contract.
@@ -557,7 +557,7 @@ interface IERC721 is IERC165 {
 
 // File: @openzeppelin/contracts/utils/Context.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Provides information about the current execution context, including the
@@ -581,7 +581,7 @@ abstract contract Context {
 
 // File: @openzeppelin/contracts/utils/introspection/ERC165.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Implementation of the {IERC165} interface.
@@ -614,7 +614,7 @@ abstract contract ERC165 is IERC165 {
 
 // File: @openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @title ERC-721 Non-Fungible Token Standard, optional metadata extension
@@ -639,7 +639,7 @@ interface IERC721Metadata is IERC721 {
 
 // File: @openzeppelin/contracts/token/ERC721/ERC721.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
@@ -1129,7 +1129,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
 
 // File: @openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev ERC721 token with storage based token URI management.
@@ -1209,7 +1209,7 @@ abstract contract ERC721URIStorage is ERC721 {
 
 // File: @openzeppelin/contracts/utils/Address.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Collection of functions related to the address type
@@ -1463,7 +1463,7 @@ library Address {
 
 // File: @openzeppelin/contracts/token/ERC721/IERC721Receiver.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @title ERC721 token receiver interface
@@ -1490,7 +1490,7 @@ interface IERC721Receiver {
 
 // File: @openzeppelin/contracts/utils/Strings.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev String operations.
@@ -1545,7 +1545,7 @@ library Strings {
 
 // File: @openzeppelin/contracts/access/IAccessControl.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev External interface of AccessControl declared to support ERC165 detection.
@@ -1648,7 +1648,7 @@ interface IAccessControl {
 
 // File: @openzeppelin/contracts/access/AccessControl.sol
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Contract module that allows children to implement role-based access
@@ -1882,7 +1882,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
     }
 }
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.0;
 
 /**
  * @dev Contract module which provides a basic access control mechanism, where
