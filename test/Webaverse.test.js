@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "../.env" });
 const { expect } = require("chai");
-const crypto = require("crypto");
+const { BN, constants, expectEvent, expectRevert } = require("@openzeppelin/test-helpers");
+const { ZERO_ADDRESS } = constants;
 const ethers = require("ethers");
 const HDWallet = require("truffle-hdwallet-provider");
 var env = process.env.NODE_ENV || "testnet";
@@ -36,21 +37,19 @@ contract("Webaverse", async function () {
 
     describe("Claim", async function () {
         context("With valid signature, valid nonce, valid expiry", async function () {
+            var validTokenIds = [1, 2, 3];
+            var nonce = ethers.BigNumber.from(ethers.utils.randomBytes(4)).toNumber();
+            var expiry = ethers.BigNumber.from(Math.round(+new Date() / 1000 + 10)).toNumber();
+
             it("Should redeem an NFT from a signed voucher", async function () {
                 // console.log(signer.address);
                 const lazyMinter = new LazyMinter({
                     contract: Webaverse,
                     signer: signer,
                 });
-                var validTokenIds = [1, 2, 3];
-                var nonce = ethers.BigNumber.from(ethers.utils.randomBytes(32)).toNumber();
-                var expiry = ethers.BigNumber.from(Math.round(+new Date() / 1000 + 50)).toNumber();
-                // console.log(expiry);
                 const voucher = await lazyMinter.createVoucher(validTokenIds[0], nonce, expiry);
-                // console.log(voucher);
                 //check if event transfer is emitted
                 const { logs } = await Webaverse.claim(claimer.address, voucher);
-                // console.log(logs);
                 expect(logs.length).to.be.equal(2);
                 expect(logs[1].event).to.be.equal("Transfer");
                 expect(logs[1].args.from).to.be.equal(signer.address);
@@ -61,48 +60,25 @@ contract("Webaverse", async function () {
                 //     .to.emit(Webaverse, "Transfer")
                 //     .withArgs(signer.address, claimer.address, voucher.tokenId);
             });
+            it("Should fail to redeem an NFT with already used nonce", async function () {
+                const lazyMinter = new LazyMinter({
+                    contract: Webaverse,
+                    signer: signer,
+                });
+                const voucher = await lazyMinter.createVoucher(validTokenIds[0], nonce, expiry);
+                //check if event transfer is emitted
+                // const { logs } = await Webaverse.claim(claimer.address, voucher);
+                // expect(logs.length).to.be.equal(2);
+                // expect(logs[1].event).to.be.equal("Transfer");
+                // expect(logs[1].args.from).to.be.equal(signer.address);
+                // expect(logs[1].args.to).to.be.equal(claimer.address);
+                // expect(logs[1].args.tokenId.toNumber()).to.be.equal(validTokenIds[0]);
+                await expectRevert(
+                    await Webaverse.claim(claimer.address, voucher),
+                    "Invalid nonce value"
+                );
+            });
         });
-        // it("Should redeem an NFT from a signed voucher", async function () {
-        //     const lazyMinter = new LazyMinter({ Webaverse, signer: signer });
-        //     let tokenId = 1;
-        //     let nonce = crypto.randomBytes(32).readUIntBE(0, 6);
-        //     let expiry = Math.round(+new Date() / 1000 + 1000);
-        //     const voucher = await lazyMinter.createVoucher();
-
-        //     await expect(redeemerContract.redeem(redeemer.address, voucher))
-        //         .to.emit(contract, "Transfer") // transfer from null address to minter
-        //         .withArgs(
-        //             "0x0000000000000000000000000000000000000000",
-        //             minter.address,
-        //             voucher.tokenId
-        //         )
-        //         .and.to.emit(contract, "Transfer") // transfer from minter to redeemer
-        //         .withArgs(minter.address, redeemer.address, voucher.tokenId);
-        // });
-
-        // it("Should fail to redeem an NFT that's already been claimed", async function () {
-        //     const { contract, redeemerContract, redeemer, minter } = await deploy();
-
-        //     const lazyMinter = new LazyMinter({ contract, signer: minter });
-        //     const voucher = await lazyMinter.createVoucher(
-        //         1,
-        //         "ipfs://bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi"
-        //     );
-
-        //     await expect(redeemerContract.redeem(redeemer.address, voucher))
-        //         .to.emit(contract, "Transfer") // transfer from null address to minter
-        //         .withArgs(
-        //             "0x0000000000000000000000000000000000000000",
-        //             minter.address,
-        //             voucher.tokenId
-        //         )
-        //         .and.to.emit(contract, "Transfer") // transfer from minter to redeemer
-        //         .withArgs(minter.address, redeemer.address, voucher.tokenId);
-
-        //     await expect(redeemerContract.redeem(redeemer.address, voucher)).to.be.revertedWith(
-        //         "ERC721: token already minted"
-        //     );
-        // });
 
         // it("Should fail to redeem an NFT voucher that's signed by an unauthorized account", async function () {
         //     const { contract, redeemerContract, redeemer, minter } = await deploy();
