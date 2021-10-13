@@ -24,7 +24,7 @@
 
 const HDWallet = require("truffle-hdwallet-provider");
 const developmentMnemonic =
-    "tent pill option appear gold proof shock purpose obscure lady end title";
+    "together dry situate grow hammer clap ball reason infant coach legal food";
 
 // const infuraKey = "fj4jll3k.....";
 //
@@ -43,6 +43,7 @@ module.exports = {
      */
 
     networks: {
+        // default: "development",
         // Useful for testing. The `development` name is special - truffle uses it by default
         // if it's defined here and no other network is specified at the command line.
         // You should run a client (like ganache-cli, geth or parity) in a separate terminal
@@ -50,13 +51,13 @@ module.exports = {
         // options below to some value.
         //
         // development: {
-        //     provider: () => new HDWallet(developmentMnemonic, "http://127.0.0.1:7545"),
-        //     network_id: "*", // Any network (default: none)
+        //     provider: () => new HDWallet(developmentMnemonic, "http://127.0.0.1:8545"),
+        //     network_id: 20, // Any network (default: none)
         // },
-        geth: {
-            provider: () => new HDWallet(developmentMnemonic, "http://127.0.0.1:8545"),
-            network_id: "*",
-        },
+        // geth: {
+        //     provider: () => new HDWallet(developmentMnemonic, "http://127.0.0.1:8545"),
+        //     network_id: "*",
+        // },
         // Another network with more advanced options...
         // advanced: {
         // port: 8777,             // Custom port

@@ -39,6 +39,7 @@
     "xlsx": "^0.17.2"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-truffle5": "^2.0.2",
     "ganache-cli": "^6.12.2",
     "jsdoc": "^3.6.7",
     "openzeppelin-contracts": "^4.0.0"

@@ -2,13 +2,13 @@
 pragma solidity 0.8.0;
 pragma abicoder v2; // required to accept structs as function parameters
 
-// import "@openzeppelin/contracts/access/AccessControl.sol";
-// import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-// import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-// import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-// import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 
-import "./utils.sol";
+// import "./utils.sol";
 
 contract Webaverse is ERC721URIStorage, EIP712 {
     string private constant SIGNING_DOMAIN = "Webaverse-voucher";
@@ -101,10 +101,10 @@ contract Webaverse is ERC721URIStorage, EIP712 {
             "Voucher has already expired"
         );
 
-        require(!burnedNonces[voucher.nonce], "Invalid nonce value");
+        require(burnedNonces[voucher.nonce] == false, "Invalid nonce value");
         // transfer the token to the claimer
         _transfer(signer, claimer, voucher.tokenId);
-        burnedNonces[voucher.nonce] == false;
+        burnedNonces[voucher.nonce] = true;
         return voucher.tokenId;
     }
 
@@ -138,11 +138,11 @@ contract Webaverse is ERC721URIStorage, EIP712 {
             block.timestamp <= voucher.expiry,
             "Voucher has already expired"
         );
-        require(burnedNonces[voucher.nonce], "Invalid nonce value");
+        require(!burnedNonces[voucher.nonce], "Invalid nonce value");
 
         // transfer the token to the claimer
         externalContractAddress.transferFrom(signer, claimer, voucher.tokenId);
-        burnedNonces[voucher.nonce] == false;
+        burnedNonces[voucher.nonce] = true;
         return voucher.tokenId;
     }
 
